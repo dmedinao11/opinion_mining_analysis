@@ -1,0 +1,4 @@
+twint
+.vscode
+__pycache__
+*.csv
