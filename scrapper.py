@@ -1,32 +1,21 @@
 import twint
-from searchParams import SEARCH_TERMS, genDatesInterval, DateStr
+from searchParams import SEARCH_TERMS, genDatesInterval, DateStr, SEARCH_TEMPLATE, SEARCH_TERMS_LIST
 from datetime import datetime
 
 
 #Utilidades
-def setUpConfig(query:DateStr):
+def setUpConfig(query:DateStr, term: str):
     c = twint.Config()
     c.Store_csv = True
-    c.Limit = 1500
-    c.Geo = "4.612639,-74.0705,30km"
-    c.Output = query.fileName
-    c.Search = SEARCH_TERMS.format(since=query.initDate, until=query.endDate)
+    c.Limit = 1000
+    c.TwitterSearch = True
+    c.Geo = "4.612639,-74.0705,40km"
+    c.Output = "output.csv"
+    c.Search = SEARCH_TEMPLATE.format(since=query.initDate, until=query.endDate, term=term)
+    c.Hide_output = True
     return c
 
 
-def scrappe(queryList):
-    if len(queryList) == 0:
-        return None
-    else:
-        query = queryList.pop()
-        c = setUpConfig(query)
-        
-
-        def callbackFunction(args):
-            twint.run.Search(c, scrappe(queryList))
-
-        return callbackFunction
-    
 
 # Generando intervalo
 initDate = datetime(2020,8,15)
@@ -35,7 +24,13 @@ datesToResearch = genDatesInterval(initDate, endDate)
 #=========================================================
 
 #Iniciando
-c = setUpConfig(datesToResearch.pop())
-#print(c.Until)
-twint.run.Search(c, scrappe(datesToResearch))
+for query in datesToResearch:
+    for term in SEARCH_TERMS_LIST:
+        c = setUpConfig(query, term)
+        try:
+            twint.run.Search(c)
+        except:
+            continue
 #=========================================================
+
+print("Finished")
