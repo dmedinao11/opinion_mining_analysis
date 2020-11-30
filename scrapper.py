@@ -7,9 +7,9 @@ from datetime import datetime
 def setUpConfig(query:DateStr, term: str):
     c = twint.Config()
     c.Store_csv = True
-    c.Limit = 1000
+    c.Limit = 4000
     c.TwitterSearch = True
-    c.Geo = "4.612639,-74.0705,40km"
+    c.Geo = "4.612639,-74.0705,100km"
     c.Output = "output.csv"
     c.Search = SEARCH_TEMPLATE.format(since=query.initDate, until=query.endDate, term=term)
     c.Hide_output = True

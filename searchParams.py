@@ -19,11 +19,9 @@ SEARCH_TERMS = "(# OR #VacunaCOVID19 OR #nomascuarentena OR #wuhan OR #todovaaes
 
 SEARCH_TERMS_LIST = [
     "#nomascuarentena",
-    "#wuhan",
     "#todovaaestarbien" ,
     "#BogotaACieloAbierto"  ,
     "#COVID_19" ,
-    "#SARS_CoV_2" ,
     "#vacuna" ,
     "#coronavirus" ,
     "#YoMeCuidoYoTeCuido",
@@ -103,3 +101,5 @@ SEARCH_TERMS_LIST = [
 ]
 
 SEARCH_TEMPLATE = "({term}) until:{until} since:{since}"
+
+print(len(SEARCH_TERMS_LIST))
